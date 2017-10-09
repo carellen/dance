@@ -1,4 +1,4 @@
-package com.saponko.com.saponko;
+package com.saponko.model;
 
 public class Dancer {
     private Field field;
