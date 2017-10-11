@@ -6,6 +6,7 @@ public class StreetDancerTest {
 
     @Test
     public void getStepsShouldReturnExpectNumber() {
+        StreetDancer dancer = new StreetDancer();
         int [] testArray1 = {2, 0, 7}; //expected 4
         int [] testArray2 = {2, 2, 1}; //expected 4
         int [] testArray3 = {4, 2, 0, 2, 3}; //expected 12
@@ -16,15 +17,40 @@ public class StreetDancerTest {
         int [] testArray8 = {2, 3, 4, 5, 6, 7, 8, 9}; //expected 12
         int [] testArray9 = {2, 4, 6, 8, 8, 6, 4, 2, 1, 2, 5, 2, 1}; //expected 24
         int [] testArray10 = {7, 0, 2}; //expected 0
-        Assert.assertEquals(4, new StreetDancer().getSteps(testArray1));
-        Assert.assertEquals(4, new StreetDancer().getSteps(testArray2));
-        Assert.assertEquals(12, new StreetDancer().getSteps(testArray3));
-        Assert.assertEquals(12, new StreetDancer().getSteps(testArray4));
-        Assert.assertEquals(12, new StreetDancer().getSteps(testArray5));
-        Assert.assertEquals(24, new StreetDancer().getSteps(testArray6));
-        Assert.assertEquals(-1, new StreetDancer().getSteps(testArray7));
-        Assert.assertEquals(12, new StreetDancer().getSteps(testArray8));
-        Assert.assertEquals(24, new StreetDancer().getSteps(testArray9));
-        Assert.assertEquals(0, new StreetDancer().getSteps(testArray10));
+        dancer.setStepsMap(testArray1);
+        Assert.assertEquals(4, dancer.getSteps());
+        dancer.setStepsMap(testArray2);
+        Assert.assertEquals(4, dancer.getSteps());
+        dancer.setStepsMap(testArray3);
+        Assert.assertEquals(12, dancer.getSteps());
+        dancer.setStepsMap(testArray4);
+        Assert.assertEquals(12, dancer.getSteps());
+        dancer.setStepsMap(testArray5);
+        Assert.assertEquals(12, dancer.getSteps());
+        dancer.setStepsMap(testArray6);
+        Assert.assertEquals(24, dancer.getSteps());
+        dancer.setStepsMap(testArray7);
+        Assert.assertEquals(-1, dancer.getSteps());
+        dancer.setStepsMap(testArray8);
+        Assert.assertEquals(12, dancer.getSteps());
+        dancer.setStepsMap(testArray9);
+        Assert.assertEquals(24, dancer.getSteps());
+        dancer.setStepsMap(testArray10);
+        Assert.assertEquals(0, dancer.getSteps());
+    }
+
+    @Test
+    public void initializeFieldMethodShouldInitialStepsMapGivenArray() throws Exception {
+        int[] testArray = {2, 3, 3, 1};
+        String[] stringTestArray = {"2", "3", "3", "1"};
+        StreetDancer dancer = new StreetDancer();
+        dancer.initializeField(stringTestArray);
+        Assert.assertArrayEquals(testArray, dancer.getStepsMap());
+    }
+    @Test
+    public void initializeFieldMethodShouldReturnFalseIfInputIsWrong() throws Exception {
+        String[] stringTestArray = {"wrong", "3", "3", "1"};
+        StreetDancer dancer = new StreetDancer();
+        Assert.assertFalse(dancer.initializeField(stringTestArray));
     }
 }
