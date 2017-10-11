@@ -1,11 +1,9 @@
 package com.saponko.model;
 
 
-public abstract class Dancer  implements StepsCountable{
-    protected Field field;
+public interface Dancer{
 
-    public abstract Field getField();
+    boolean initializeField(String[] input);
 
-    public abstract void setField(Field field);
-
+    int getSteps();
 }
