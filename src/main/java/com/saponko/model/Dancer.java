@@ -25,50 +25,50 @@ public class Dancer {
         isFinished = finished;
     }
     //check if current position is inside field
-    private boolean checkPosition(int position) {
-        return position >= 0 && position < field.getLength();
+    private boolean isPositionInBoundsOfField(int[] stepsMap, int position) {
+        return position >= 0 && position < stepsMap.length;
     }
 
     private boolean canMove(int[] stepsMap, int position) {
-        if (stepsMap[position] > 0) {
-            return true;
-        } else {
-            isFinished = true;
-            return false;
-        }
+        return stepsMap[position] > 0;
     }
+
     //return new position of the dancer
     private int moveDancer(int[] stepsMap, int position) {
         return stepsMap[position] % 2 == 0 ? position + stepsMap[position] : position - stepsMap[position];
     }
+
+    private boolean canDoFirstStep(int[] stepsMap) {
+        return stepsMap[0] % 2 == 0 && stepsMap[0] < stepsMap.length;
+    }
+
+    private boolean isDancerCanStopDance(int[] currentFieldState, int currentPosition) {
+        return currentFieldState[currentPosition] == 0;
+    }
+
     //return steps quantity for current dancer
-    public int getSteps() {
-        int[] input = field.getStepList();
-        int result = 0;
-        int position = 0;
-        int currentPosition = 0;
-        if (input[position] % 2 == 0 && input[position] < input.length) {
-            while (canMove(input, position)) {
-                currentPosition = position;
-                position = moveDancer(input, position);
-                if (checkPosition(position)) {
-                    result += input[currentPosition];
-                } else {
-                    break;
-                }
-                input[currentPosition] = -1;
-            }
-            if (checkPosition(position)) {
-                if (input[position] == 0 ) {
-                    return result + position;
-                } else {
-                    return -1;
-                }
-            } else {
-                return result + currentPosition;
-            }
-        } else {
+    public int getSteps(int[] stepsMap) {
+        if (!canDoFirstStep(stepsMap)) {
             return 0;
         }
+        int stepCounter = 0;
+        int position = 0;
+        int lastPosition = 0;
+        while (canMove(stepsMap, position)) {
+            lastPosition = position;
+            position = moveDancer(stepsMap, position);
+            if (!isPositionInBoundsOfField(stepsMap, position)) {
+                break;
+            }
+            stepCounter += stepsMap[lastPosition];
+            stepsMap[lastPosition] = -1;
+        }
+        if (!isPositionInBoundsOfField(stepsMap, position)) {
+            return stepCounter + lastPosition;
+        }
+        if (!isDancerCanStopDance(stepsMap, position)) {
+            return -1;
+        }
+        return stepCounter + position;
     }
 }
