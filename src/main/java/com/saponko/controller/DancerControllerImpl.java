@@ -5,13 +5,13 @@ import com.saponko.view.View;
 
 import java.util.ResourceBundle;
 
-public class StreetDancerController implements DancerController {
+public class DancerControllerImpl implements DancerController {
 
     private Dancer dancer;
     private View view;
     private final static ResourceBundle BUNDLE = ResourceBundle.getBundle("messages");
 
-    public StreetDancerController(View view) {
+    public DancerControllerImpl(View view) {
         this.view = view;
     }
 
@@ -36,10 +36,6 @@ public class StreetDancerController implements DancerController {
 
     @Override
     public String getStepsQuantity() {
-        if (dancer != null) {
-            int[] stepsMap = ((StreetField)dancer.getField()).getStepsMap();
-            return String.valueOf(dancer.getSteps(stepsMap));
-        }
-        return null;
+        return String.valueOf(dancer.getSteps());
     }
 }
