@@ -1,19 +1,15 @@
 package com.saponko.model;
 
-public class StreetDancer extends Dancer {
+public class StreetDancer implements Dancer {
+    //instead of redundant Field class
+    private int[] stepsMap;
 
-    @Override
-    public void setField(Field field) {
-        if (field.getClass() == StreetField.class) {
-            this.field = field;
-        } else {
-            throw new IllegalArgumentException("Sorry, but StreetDancer can dance only on StreetField.");
-        }
+    public void setStepsMap(int[] stepsMap) {
+        this.stepsMap = stepsMap;
     }
 
-    @Override
-    public StreetField getField() {
-        return (StreetField)this.field;
+    public int[] getStepsMap() {
+        return this.stepsMap;
     }
 
     //check if current position is inside field
@@ -40,7 +36,7 @@ public class StreetDancer extends Dancer {
 
     //return steps quantity for current dancer
     @Override
-    public int getSteps(int[] stepsMap) {
+    public int getSteps() {
         if (!canDoFirstStep(stepsMap)) {
             return 0;
         }
@@ -64,5 +60,22 @@ public class StreetDancer extends Dancer {
         }
         return stepCounter + position;
     }
+    @Override
+    public boolean initializeField(String[] input) {
+        if (input == null || input.length < 2 || input.length > 49) {
+            System.out.println("Length of input array must be between 2 and 49");
+            return false;
+        }
+        int[] array = new int[input.length];
+        try {
+            for (int i = 0; i < input.length; i++) {
+                array[i] = Integer.parseInt(input[i]);
+            }
+            this.stepsMap = array;
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Incorrect number in input array");
+            return false;
+        }
+    }
 }
-
