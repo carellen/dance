@@ -1,3 +1,4 @@
+import com.saponko.model.StreetDancer;
 import org.junit.Assert;
 import org.junit.Test;
 
