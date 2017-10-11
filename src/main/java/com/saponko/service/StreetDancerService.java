@@ -1,17 +1,18 @@
 package com.saponko.service;
 
-import com.saponko.model.Dancer;
-import com.saponko.model.Field;
+import com.saponko.model.StreetDancer;
+import com.saponko.model.StreetField;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Service {
+public class StreetDancerService {
+
     public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static String[] getInput() {
-        BufferedReader reader = Service.reader;
+        BufferedReader reader = StreetDancerService.reader;
         try {
             String[] input = reader.readLine().split(" ");
             return input;
@@ -21,12 +22,16 @@ public class Service {
         }
     }
 
-    public static Dancer initializeDancer(String[] stepsMap) {
-        Field field = Field.getInstance(stepsMap);
-        if (field == null) {
+    public static StreetDancer initializeStreetDancer(String[] stepsMap) {
+        StreetField field = new StreetField();
+        int[] input = field.initializeField(stepsMap);
+        field.setStepsMap(input);
+        if (field.getStepsMap() == null) {
             return null;
         }
-        return new Dancer(field);
+        StreetDancer dancer = new StreetDancer();
+        dancer.setField(field);
+        return dancer;
     }
 
     public static void closeReader() {
